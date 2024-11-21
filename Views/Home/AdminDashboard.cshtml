@@ -1,0 +1,87 @@
+﻿<!---References:
+Code sourced from W3SCHOOLS & CHATGPT
+--------------------------------------------------------------------->
+@model List<PROGFinalPOE.Models.Claims>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Dashboard - CMCS</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <style>
+         body {
+             background-color: #f0f0f0;
+         }
+
+         .dashboard-container {
+             margin-top: 50px;
+             background: #fff;
+             padding: 30px;
+             border-radius: 8px;
+             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+
+         .btn-approve {
+             background-color: #28a745;
+             color: white;
+         }
+
+         .btn-deny {
+             background-color: #dc3545;
+             color: white;
+         }
+
+         .doc-link {
+             color: #007bff;
+         }
+         </style> -->
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-container">
+            <h3>Submitted Claims</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Lecturer</th>
+                        <th>Date</th>
+                        <th>Total Claim</th>
+                        <th>Hours Worked</th>
+                        <th>Supporting Document</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var claims in Model)
+                    {
+                        <tr>
+                            <td>@claims.ClaimsId</td>
+                            <td>@claims.hoursWorked</td>
+                            <td>@claims.TotalAmount</td>
+                            <td><a href="/uploads/@claims.supportingDocument " target="_blank">View Document</a></td>
+                            <td>@claims.Status</td>
+                            <td>
+                                <form method="post" action="/Admin/ApprovedClaim">
+                                    <input type="hidden" name="claimId" value="@claims.ClaimsId" />
+                                    <button type="submit" class=" btn btn-success"> Approve</button>
+                                </form>
+                                <form method="post" action="/Admin/RejectClaim">
+                                    <input type="hidden" name="claimId" value="@claims.ClaimsId" />
+                                    <button type="submit" class=" btn btn-danger"> Deny</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>
+<!---------------------------------------------------- END OF FILE --------------------------------------------------------------------->

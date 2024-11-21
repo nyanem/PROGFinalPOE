@@ -1,0 +1,98 @@
+﻿<!---References:
+Code sourced from W3SCHOOLS & CHATGPT
+--------------------------------------------------------------------->
+
+@model List<PROGFinalPOE.Models.Claims>
+
+=======
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Dashboard - CMCS</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .dashboard-container {
+            margin-top: 50px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .claim-status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-container">
+            <h3>Submit a New Claim</h3>
+            <form method=" post" action="/Lecturer/SubmitClaim" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="Date">Claim Date</label>
+                    <input type="date" class="form-control" id="Date" name="claimDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="hoursWorked">Hours Worked</label>
+                    <input type="number" class="form-control" id="hoursWorked" name="hoursWorked" required>
+                </div>
+                <div class="form-group">
+                    <label for="hourlyRate">Hourly Rate</label>
+                    <input type="number" class="form-control" id="hourlyRate" name="hourlyRate" required>
+                </div>
+                <div class="form-group">
+                    <label for="supportingDoc">Upload Time Sheets</label>
+                    <<<<<<< HEAD
+                    <input type="file" class="form-control" id="supportingDoc" name="supportingDoc" accept=".pdf,.docx,.xlsx">
+                    =======
+                    <input type="file" class="form-control" id="supportingDoc">
+                    >>>>>>> 06458ca620ef60f97cf3961e7544d10a39bd6168
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit Claim</button>
+            </form>
+        </div>
+
+        <div class="dashboard-container mt-5">
+            <h3>Claims History</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Claim</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach (var claims in Model)
+                        {
+                        <tr>
+                            <td>@claims.hoursWorked</td>
+                            <td>@claims.TotalAmount</td>
+                            <td>@claims.Status</td>
+                            <td>
+                                <a href="/uploads/@claims.supportingDocument" target="_blank">@claims.supportingDocument</a>
+                            </td>
+                        </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<!---------------------------------------------------- END OF FILE --------------------------------------------------------------------->
