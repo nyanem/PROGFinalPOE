@@ -1,0 +1,35 @@
+﻿
+@{
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Claim ID</th>
+            <th>Lecturer</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.ClaimsId</td>
+                <td>@claim.LecturerId</td>
+                <td>@claim.TotalAmount</td>
+                <td>@claim.Status</td>
+                <td>
+                    <form asp-action="ApproveClaim" method="post">
+                        <input type="hidden" name="claimId" value="@claim.ClaimsId" />
+                        <button class="btn btn-success">Approve</button>
+                    </form>
+                    <form asp-action="RejectClaim" method="post">
+                        <input type="hidden" name="claimId" value="@claim.ClaimsId" />
+                        <button class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

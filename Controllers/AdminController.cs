@@ -22,8 +22,14 @@ namespace PROGFinalPOE.Controllers
             return View("AdminDashboard", claims);
         }
 
+        public IActionResult PendingClaims()
+        {
+            var claims = _context.claims.Where(c => c.Status == "Pending").ToList();
+            return View(claims);
+        }
 
-       //Approve a claim
+
+        //Approve a claim
         [HttpPost]
         public IActionResult ApproveClaim(int claimId)
         {
@@ -33,7 +39,7 @@ namespace PROGFinalPOE.Controllers
                 claim.Status = "Approved";
                  _context.SaveChangesAsync();
             }
-            return RedirectToAction("AdminDashboard");
+            return RedirectToAction("pendingClaims");
         }
 
         //Reject Claim 
@@ -46,7 +52,7 @@ namespace PROGFinalPOE.Controllers
                 claim.Status = "Rejected";
                 _context.SaveChangesAsync();
             }
-            return RedirectToAction("AdminDashboard");
+            return RedirectToAction("PendingClaims");
         }
     }
 }
