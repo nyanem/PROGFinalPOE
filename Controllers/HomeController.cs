@@ -25,7 +25,7 @@ namespace PROGFinalPOE.Controllers
         {
             int lecturerID = 1;
             var claims = _context.claims.Where (c => c.LecturerID == lecturerID).ToList();
-            return View(claims);
+            return View();
         }
 
         //Inserting admin dashboard to home controller

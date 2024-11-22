@@ -40,11 +40,7 @@ Code sourced from W3SCHOOLS & CHATGPT
     <div class="container">
         <div class="dashboard-container">
             <h3>Submit a New Claim</h3>
-            <form method=" post" action="SubmitClaim" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="Date">Claim Date</label>
-                    <input type="date" class="form-control" id="Date" name="claimDate" required>
-                </div>
+            <form method=" post" asp-action="SubmitClaim" asp-controller="Claims" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="hoursWorked">Hours Worked</label>
                     <input type="number" class="form-control" id="hoursWorked" name="hoursWorked" required>
@@ -59,7 +55,7 @@ Code sourced from W3SCHOOLS & CHATGPT
                     <input type="file" class="form-control" id="supportingDoc" name="supportingDoc" accept=".pdf,.docx,.xlsx">
               
                 </div>
-                <button type="submit" asp-controller="Claims" asp-action="SubmitClaim">Submit Claim</button>
+                <button type="submit">Submit Claim</button>
             </form>
         </div>
 
@@ -85,11 +81,12 @@ Code sourced from W3SCHOOLS & CHATGPT
                                 <a href="/uploads/@claims.supportingDocument" target="_blank">@claims.supportingDocument</a>
                             </td>
                         </tr>
+
                         }
                 </tbody>
             </table>
         </div>
     </div>
 </body>
-</html>
+
 <!---------------------------------------------------- END OF FILE --------------------------------------------------------------------->
