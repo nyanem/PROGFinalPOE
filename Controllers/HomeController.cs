@@ -24,7 +24,7 @@ namespace PROGFinalPOE.Controllers
         public IActionResult Privacy()
         {
             int lecturerID = 1;
-            var claims = _context.claims.Where (c => c.LecturerId == lecturerID).ToList();
+            var claims = _context.claims.Where (c => c.LecturerID == lecturerID).ToList();
             return View(claims);
         }
 

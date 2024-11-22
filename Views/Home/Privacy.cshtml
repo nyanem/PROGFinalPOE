@@ -4,7 +4,6 @@ Code sourced from W3SCHOOLS & CHATGPT
 
 @model List<PROGFinalPOE.Models.Claims>
 
-=======
 @{
     ViewData["Title"] = "Privacy Policy";
 }
@@ -41,7 +40,7 @@ Code sourced from W3SCHOOLS & CHATGPT
     <div class="container">
         <div class="dashboard-container">
             <h3>Submit a New Claim</h3>
-            <form method=" post" action="/Lecturer/SubmitClaim" enctype="multipart/form-data">
+            <form method=" post" action="SubmitClaim" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="Date">Claim Date</label>
                     <input type="date" class="form-control" id="Date" name="claimDate" required>
@@ -56,13 +55,11 @@ Code sourced from W3SCHOOLS & CHATGPT
                 </div>
                 <div class="form-group">
                     <label for="supportingDoc">Upload Time Sheets</label>
-                    <<<<<<< HEAD
+                  
                     <input type="file" class="form-control" id="supportingDoc" name="supportingDoc" accept=".pdf,.docx,.xlsx">
-                    =======
-                    <input type="file" class="form-control" id="supportingDoc">
-                    >>>>>>> 06458ca620ef60f97cf3961e7544d10a39bd6168
+              
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Submit Claim</button>
+                <button type="submit" asp-controller="Claims" asp-action="SubmitClaim">Submit Claim</button>
             </form>
         </div>
 

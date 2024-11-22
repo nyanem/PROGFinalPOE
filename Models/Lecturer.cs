@@ -2,7 +2,7 @@
 {
     public class Lecturer
     {
-        public int LecturerId { get; set; }   
+        public int LecturerID { get; set; }   
         public string LecturerName { get; set; }
         public string Hours { get; set; }
         public int ratePH { get; set; }

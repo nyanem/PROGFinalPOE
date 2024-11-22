@@ -2,10 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using PROGFinalPOE.Data;
 using PROGFinalPOE.Models;
+using System.Linq.Expressions;
 
 
 
-namespace ST10026525.PROG62112.POE.part1.Controllers
+namespace PROGFinalPOE.Controllers
 {
     public class LecturerController : Controller
     {
@@ -16,53 +17,46 @@ namespace ST10026525.PROG62112.POE.part1.Controllers
             _context = context;
         }
 
+        // This will return the claim submissions form view
+        [HttpGet]
+        public IActionResult SubmitClaim() {
+            return View();
+        }
+
         // Logic it for validating the file submissions and then upload them to the database
         [HttpPost]
-        public async Task<IActionResult> SubmitClaim(int hoursWorked, decimal hourlyRate, string notes, IFormFile supportingDoc)
+        public IActionResult SubmitClaim(Claims claims, IFormFile supportingDoc)
         {
+            // this will calculate the total amount that is owed to the lecturers
+            claims.TotalAmount = claims.hoursWorked * claims.hourlyRate;
+            claims.claimDate = DateTime.Now;
+            claims.Status = "Pending";
+
+            //Handle Document upload
+
             if (supportingDoc != null && supportingDoc.Length > 0)
             {
-                if (supportingDoc.Length > 10485760) // 10MB limit
-                {
-                    ModelState.AddModelError("", "File size should be less than 10MB");
-                }
-
-                var allowedExtensions = new[] { ".pdf", ".docx", ".xlsx" };
-                var fileExtension = Path.GetExtension(supportingDoc.FileName).ToLower();
-                if (!allowedExtensions.Contains(fileExtension))
-                {
-                    ModelState.AddModelError("", "Invalid file type. Only .pdf, .docx, and .xlsx are allowed.");
-                }
-
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwwroot/uploads", supportingDoc.FileName);
+                var filePath = Path.Combine("wwwroot/documents", supportingDoc.FileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    await supportingDoc.CopyToAsync(stream);
+                    supportingDoc.CopyTo(stream);
                 }
-                var totalAmount = hoursWorked * hourlyRate;
-
-                var claim = new Claims
-                {
-                    hoursWorked = hoursWorked,
-                    hourlyRate = (int)hourlyRate,
-                    TotalAmount = totalAmount,
-                    supportingDocument = supportingDoc.FileName,
-                    Status = "Pending",
-                    claimDate = DateTime.Now
-                };
-
-                _context.claims.Add(claim);
-                await _context.SaveChangesAsync();
+                claims.supportingDocument = filePath;
             }
 
-            //Add code to  Save the claim details to the databse 
+            //Saving the claim to the database
+            _context.claims.Add(claims);
+            _context.SaveChanges();
 
-            return RedirectToAction("Privacy");
+            return RedirectToAction("Success");
         }
-        public IActionResult Privacy()
-        {
-            var claims = _context.claims.ToList();
-            return View(claims);
-        }
+
+        
     }
 }
+        
+           
+     
+
+        
+  

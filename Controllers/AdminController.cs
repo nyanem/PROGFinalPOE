@@ -4,7 +4,7 @@ using PROGFinalPOE.Data;
 using PROGFinalPOE.Models;
 
 
-namespace ST10026525.PROG62112.POE.part1.Controllers
+namespace PROGFinalPOE.Controllers
 {
     public class AdminController : Controller
     {
