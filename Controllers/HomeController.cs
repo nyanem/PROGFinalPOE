@@ -9,6 +9,7 @@ namespace PROGFinalPOE.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AppDBcontext _context;
+        private byte[] reportBytes;
 
         public HomeController(ILogger<HomeController> logger, AppDBcontext context)
         {
@@ -34,6 +35,19 @@ namespace PROGFinalPOE.Controllers
             var claims= _context.claims.Where(c=> c.Status == "Pending").ToList();
             return View(claims);
         }
+        public IActionResult ApprovedClaims()
+        {
+            var claims = _context.claims.Where(c => c.Status == "Approved").ToList();
+            return View(claims);
+        }
+
+        public IActionResult GenerateReport()
+        {
+            var claims = _context.claims.Where(c => c.Status == "Approved").ToList();
+            // Logic to generate a report (e.g., export to PDF or Excel)
+            return File(reportBytes, "application/pdf", "ApprovedClaimsReport.pdf");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

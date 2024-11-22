@@ -11,6 +11,7 @@ namespace PROGFinalPOE.Controllers
     public class ClaimsController : Controller
     {
         private readonly AppDBcontext _context;
+        private byte[] reportBytes;
 
         public ClaimsController(AppDBcontext context)
         {
@@ -43,6 +44,19 @@ namespace PROGFinalPOE.Controllers
             }
             return View(claims);
         }
+        public IActionResult ApprovedClaims()
+        {
+            var claims = _context.claims.Where(c => c.Status == "Approved").ToList();
+            return View(claims);
+        }
+
+        public IActionResult GenerateReport()
+        {
+            var claims = _context.claims.Where(c => c.Status == "Approved").ToList();
+            // Logic to generate a report (e.g., export to PDF or Excel)
+            return File(reportBytes, "application/pdf", "ApprovedClaimsReport.pdf");
+        }
+
 
     }
 }
