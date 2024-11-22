@@ -3,11 +3,7 @@ Code sourced from W3SCHOOLS & CHATGPT
 --------------------------------------------------------------------->
 
 @model List<PROGFinalPOE.Models.Claims>
-
-@{
-    ViewData["Title"] = "Privacy Policy";
-}
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,14 +36,20 @@ Code sourced from W3SCHOOLS & CHATGPT
     <div class="container">
         <div class="dashboard-container">
             <h3>Submit a New Claim</h3>
-            <form method=" post" asp-action="SubmitClaim" asp-controller="Claims" enctype="multipart/form-data">
+            <form method="post" asp-action="Privacy" asp-controller="ClaimsController" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="hoursWorked">Hours Worked</label>
-                    <input type="number" class="form-control" id="hoursWorked" name="hoursWorked" required>
+                    <input asp-for="hoursWorked" id="hoursWorked" class="form-control" type="number" required />
+                    <span asp-validation-for="hoursWorked" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label for="hourlyRate">Hourly Rate</label>
-                    <input type="number" class="form-control" id="hourlyRate" name="hourlyRate" required>
+                    <input asp-for="hourlyRate" id="hourlyRate" class="form-control" type="number" step="0.01" required />
+                    <span asp-validation-for="hourlyRate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="totalAmount">Total Amount</label>
+                    <input asp-for="totalAmount" id="totalAmount" class="form-control" type="number" readonly />
                 </div>
                 <div class="form-group">
                     <label for="supportingDoc">Upload Time Sheets</label>
@@ -58,6 +60,15 @@ Code sourced from W3SCHOOLS & CHATGPT
                 <button type="submit">Submit Claim</button>
             </form>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('#hoursWorked, #hourlyRate').on('input', function () {
+                    const hours = parseFloat($('#hoursWorked').val()) || 0;
+                    const rate = parseFloat($('#hourlyRate').val()) || 0;
+                    $('#totalAmount').val(hours * rate);
+                });
+            });
+        </script>
 
         <div class="dashboard-container mt-5">
             <h3>Claims History</h3>
@@ -88,5 +99,5 @@ Code sourced from W3SCHOOLS & CHATGPT
         </div>
     </div>
 </body>
-
+</html>
 <!---------------------------------------------------- END OF FILE --------------------------------------------------------------------->

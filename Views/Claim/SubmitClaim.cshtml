@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form asp-action="SubmitClaim" asp-controller="Claims" method="post">
+    <div class="form-group">
+        <label for="hoursWorked">Hours Worked</label>
+        <input id="hoursWorked" name="HoursWorked" class="form-control" type="number" required />
+    </div>
+    <div class="form-group">
+        <label for="hourlyRate">Hourly Rate</label>
+        <input id="hourlyRate" name="HourlyRate" class="form-control" type="number" step="0.01" required />
+    </div>
+    <div class="form-group">
+        <label for="totalAmount">Total Amount</label>
+        <input id="totalAmount" name="TotalAmount" class="form-control" type="number" readonly />
+        <div class="form-group">
+            <label for="supportingDoc">Upload Time Sheets</label>
+
+            <input type="file" class="form-control" id="supportingDoc" name="supportingDoc" accept=".pdf,.docx,.xlsx">
+
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script>
+    // Auto-calculate Total Amount
+    $('#hoursWorked, #hourlyRate').on('input', function() {
+        const hours = parseFloat($('#hoursWorked').val()) || 0;
+        const rate = parseFloat($('#hourlyRate').val()) || 0;
+        $('#totalAmount').val(hours * rate);
+    });
+</script>

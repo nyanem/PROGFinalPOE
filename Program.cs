@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PROGFinalPOE.Data;
 using System;
@@ -11,10 +12,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDBcontext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-
+//Add Identity 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDBcontext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await DatabaseSeeder.SeedRolesAndUsers(services);
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
