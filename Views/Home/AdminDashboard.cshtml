@@ -46,7 +46,7 @@ Code sourced from W3SCHOOLS & CHATGPT
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Lecturer</th>
+                        <th>Claim ID</th>
                         <th>Date</th>
                         <th>Total Claim</th>
                         <th>Hours Worked</th>
@@ -61,16 +61,17 @@ Code sourced from W3SCHOOLS & CHATGPT
                     {
                         <tr>
                             <td>@claims.ClaimsId</td>
+                            <td>@claims.claimDate.DateTime("yyy-MM-dd")</td>
                             <td>@claims.hoursWorked</td>
-                            <td>@claims.TotalAmount</td>
+                            <td>@claims.TotalAmount.ToString("C")</td>
                             <td><a href="/uploads/@claims.supportingDocument " target="_blank">View Document</a></td>
                             <td>@claims.Status</td>
                             <td>
-                                <form method="post" action="/Admin/ApprovedClaim">
+                                <form method="post" asp-action="ApprovedClaim" asp-controller="Admin">
                                     <input type="hidden" name="claimId" value="@claims.ClaimsId" />
                                     <button type="submit" class=" btn btn-success"> Approve</button>
                                 </form>
-                                <form method="post" action="/Admin/RejectClaim">
+                                <form method="post" asp-action="RejectClaim" asp-controller="Admin">
                                     <input type="hidden" name="claimId" value="@claims.ClaimsId" />
                                     <button type="submit" class=" btn btn-danger"> Deny</button>
                                 </form>

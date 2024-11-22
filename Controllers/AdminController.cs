@@ -14,37 +14,37 @@ namespace PROGFinalPOE.Controllers
         {
             _context = context;
         }
-        public IActionResult AdminDashboard()
+
+        [HttpGet]
+        public IActionResult Dashboard()
         {
-            var claims = _context.claims.Where(c => c.Status == "Pending").ToList();
-
-            if (claims == null || !claims.Any())
-            {
-                claims = new List<Claims>();
-            }
-            return View(claims);
-
+            var claims = _context.claims.ToList();
+            return View("AdminDashboard", claims);
         }
+
+
+       //Approve a claim
         [HttpPost]
-        public async Task<IActionResult> ApproveClaim(int claimId)
+        public IActionResult ApproveClaim(int claimId)
         {
             var claim = _context.claims.FirstOrDefault(c => c.ClaimsId == claimId);
             if (claim != null)
             {
                 claim.Status = "Approved";
-                await _context.SaveChangesAsync();
+                 _context.SaveChangesAsync();
             }
             return RedirectToAction("AdminDashboard");
         }
 
+        //Reject Claim 
         [HttpPost]
-        public async Task<IActionResult> RejectClaim(int claimId)
+        public IActionResult RejectClaim(int claimId)
         {
             var claim = _context.claims.FirstOrDefault(c => c.ClaimsId == claimId);
             if (claim != null)
             {
                 claim.Status = "Rejected";
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
             return RedirectToAction("AdminDashboard");
         }
